@@ -2,32 +2,36 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from multiselectfield import MultiSelectField
 
+#interest options
 my_fields = (
             ('Internship','Internship'),
+            ('Externship','Externship'),
+            ('Student Program','Student Program'),
             ('Scholarship','Scholarship'),
-            ('Apprenticeships','Apprenticeships'),
+            ('Apprenticeship','Apprenticeship'),
             ('Training','Training'),
-            ('Product Management','Product Management'),
             ('Language','Language'),
             ('Social Good','Social Good'),
+            ('Open Ended', 'Open Ended'),
+            ('Meet up', 'Meet up'),
+            ('Conference', 'Conference'),
+            ('Workshop', 'Workshop'),
             ('Machine Learning/AI','Machine Learning/AI'),
             ('Blockchain','Blockchain'),
             ('Design','Design'),
             ('Web','Web'),
-            ('Health','Health'),
             ('AR/VR','AR/VR'),
             ('Gaming','Gaming'),
-            ('Fintech','Fintech'),
             ('IoT','IoT'),
             ('DevOps','DevOps'),
             ('Cloud','Cloud'),
-            ('Lifehacks','Lifehacks'),
             ('Cybersecurity','Cybersecurity'),
-            ('Voice skills','Voice skills'),
             ('Mobile','Mobile'),
+            ('Data', 'Data'),
             ('Music/Art','Music/Art'),
 )
 
+#type options
 my_types = (
     ('Competitive','Competitive'),
     ('Event','Event'),
@@ -51,6 +55,7 @@ class opportunity(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
     time = models.DateTimeField(auto_now_add=True)
     type = models.CharField(choices=my_types, blank=False,max_length=20, default='Program')
+    featured = models.BooleanField(default=False)
 
     def __str__(self):
         return (f"{self.id}. {self.head}: {self.start}, {self.interest} by {self.user}")
