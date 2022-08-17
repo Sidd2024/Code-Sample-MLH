@@ -303,12 +303,19 @@ def activate_mails(request):
 
             #Delete mails model for user if he/she chooses to unsubscribe:
             if unsubscribe == True:
-                mails.objects.get(user = user, mail_id = mail_id).delete()
-                form = mails_form()
-                return render(request, "Allops/mails.html",{
-                    "success": "Unsubscribed to mail notifications!",
-                    "form": form
-                })
+                try:
+                    mails.objects.get(user = user, mail_id = mail_id).delete()
+                    form = mails_form()
+                    return render(request, "Allops/mails.html",{
+                        "success": "Unsubscribed to mail notifications!",
+                        "form": form
+                    })
+                except:
+                    form = mails_form()
+                    return render(request, "Allops/mails.html",{
+                        "error": "Invalid email id, you must have subscribed with some other email id!",
+                        "form": form
+                    })
 
             #update mail interest fields of user if already subscribed to mail notfications:
             if subscribed is not None:
